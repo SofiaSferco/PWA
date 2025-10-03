@@ -8,7 +8,6 @@
 <body>
     <div id="app">
         <h1>TRABAJO PRÁCTICO N°1</h1>
-        <br>
         <h2>Paso #1 - Creación repositorio</h2>
         <hr>
         <h2>{{ segundopaso }}</h2>
@@ -24,9 +23,9 @@
         <hr>
         <h2>{{cuartopaso}}</h2>
         <ul>
-            <li v-for="tarea in tareas" :key="tarea.id" :class="{tachar: tarea.completada}"><input type="checkbox" v-model="tarea.completada"> {{tarea.texto}}</li>
+            <li v-for="tarea in tareas" :key="tarea.id"><input type="checkbox" v-model="tarea.completada"> {{tarea.texto}}</li>
         </ul>
-        <input v-model="nuevaTarea" placeholder="Introducir nueva tarea" @keyup.enter="agregarTarea">
+        <input v-model="nuevaTarea" placeholder="Introducir nueva tarea">
         <button @click="agregarTarea">Añadir tarea</button>
         <p>Tareas pendientes: {{tareasPendientes}}</p>
         <p>Tareas totales: {{tareasTotales}}</p>
@@ -80,38 +79,22 @@
 <style>
     body {
         font-family: Arial, Helvetica, sans-serif;
-        color: #ffff;
-        background-color: #001f3f;
-    }
-    h1{
-        text-align: center;
+        background-color: rgb(16, 16, 116);
         color: #ffff;
     }
-    h2 {
-        color:#ffff;
+    h1,h2 {
+        color: #ffff;
     }
     hr {
-        border: 1px solid #ffffff33;
-        }
+        border: 1px solid #ffff;
+    }
     button {
         background-color: #ffff;
         color: black;
-        cursor: pointer;
-        border-radius: 5px;
     }
     button:hover {
-        background-color: rgb(177, 177, 240);
+        background-color: rgb(16, 16, 116);
     }
-    ul {
-        list-style-type: none;
-        padding-left: 0px;
-    }
-    .tachar{
-        text-decoration: line-through;
-        color: gray
-    }
-    input[type="checkbox"] {
-        cursor: pointer;
-    }
+    ul
 </style>
 </html>

@@ -26,7 +26,7 @@
         <ul>
             <li v-for="tarea in tareas" :key="tarea.id" :class="{tachar: tarea.completada}"><input type="checkbox" v-model="tarea.completada"> {{tarea.texto}}</li>
         </ul>
-        <input v-model="nuevaTarea" placeholder="Introducir nueva tarea" @keyup.enter="agregarTarea">
+        <input v-model="nuevaTarea" placeholder="Introducir nueva tarea">
         <button @click="agregarTarea">Añadir tarea</button>
         <p>Tareas pendientes: {{tareasPendientes}}</p>
         <p>Tareas totales: {{tareasTotales}}</p>
@@ -80,19 +80,18 @@
 <style>
     body {
         font-family: Arial, Helvetica, sans-serif;
-        color: #ffff;
-        background-color: #001f3f;
+        color: gray;
     }
     h1{
         text-align: center;
-        color: #ffff;
+        color: black;
     }
     h2 {
-        color:#ffff;
+        color: rgb();
     }
     hr {
-        border: 1px solid #ffffff33;
-        }
+        border: 1px solid #ffff;
+    }
     button {
         background-color: #ffff;
         color: black;
@@ -102,16 +101,12 @@
     button:hover {
         background-color: rgb(177, 177, 240);
     }
-    ul {
+    ul{
         list-style-type: none;
-        padding-left: 0px;
     }
     .tachar{
         text-decoration: line-through;
-        color: gray
-    }
-    input[type="checkbox"] {
-        cursor: pointer;
+        color: #ffff;
     }
 </style>
 </html>

@@ -10,17 +10,16 @@
         <h1>TRABAJO PRÁCTICO N°1</h1>
         <h2>Paso #1 - Creación repositorio</h2>
         <h2>{{ segundopaso }}</h2>
-        <p>Nombre: {{ nombre }}</p>
-        <p>Edad: {{ edad }}</p>
-        <p>Ciudad: {{ ciudad }}</p>
-        <p>Hola, mi nombre es {{ nombre }}, tengo {{ edad }} años y vivo en {{ ciudad }}.</p>
+        <p>Hola{{ nombre }}</p>
+        <p>{{ edad }}</p>
+        <p>{{ ciudad }}</p>
     </div>
     <script>
         const { createApp } = Vue;
         createApp({
             data() {
                 return {
-                    segundopaso: 'Paso #2 - Información de Perfil Simple (Interpolación)',
+                    segundopaso: 'Paso #2 - Información de Perfil Simple',
                     nombre: 'Ana García',
                     edad: 30,
                     ciudad: 'Tupungato'

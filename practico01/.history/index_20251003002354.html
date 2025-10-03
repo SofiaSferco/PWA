@@ -27,8 +27,6 @@
         </ul>
         <input v-model="nuevaTarea" placeholder="Introducir nueva tarea">
         <button @click="agregarTarea">Añadir tarea</button>
-        <p>Tareas pendientes: {{tareasPendientes}}</p>
-        <p>Tareas totales: {{tareasTotales}}</p>
 
 
 
@@ -64,14 +62,7 @@
                         }
                     this.nuevaTarea = '';    
                     }    
-                }, computed: {
-                    tareasPendientes() {
-                        return this.tareas.filter (tarea => !tarea.completada).length;
-                    },
-                     tareasTotales() {
-                        return this.tareas.length;
-                    }
-                }
+                }, comp
             },
         ).mount('#app');
     </script>

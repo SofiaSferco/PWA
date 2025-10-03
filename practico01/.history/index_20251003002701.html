@@ -27,8 +27,6 @@
         </ul>
         <input v-model="nuevaTarea" placeholder="Introducir nueva tarea">
         <button @click="agregarTarea">Añadir tarea</button>
-        <p>Tareas pendientes: {{tareasPendientes}}</p>
-        <p>Tareas totales: {{tareasTotales}}</p>
 
 
 
@@ -45,7 +43,7 @@
                     tercerpaso: 'Paso #3 - Contador Interactivo (Interpolación y Eventos)',
                     contador: 0,
                     cuartopaso: 'Paso #4 - Lista de Tareas con Conteo y Estado Propiedades Computadas, Interpolación, Eventos)',
-                    nuevaTarea: '',
+                    nuevaTarea: '',fi
                     tareas: [{
                         id: 1,
                         texto: "Aprender Vue",
@@ -66,10 +64,7 @@
                     }    
                 }, computed: {
                     tareasPendientes() {
-                        return this.tareas.filter (tarea => !tarea.completada).length;
-                    },
-                     tareasTotales() {
-                        return this.tareas.length;
+                        return this.tareas.g
                     }
                 }
             },

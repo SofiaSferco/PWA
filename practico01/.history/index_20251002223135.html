@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trabajo Práctico 1</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>TRABAJO PRÁCTICO N°1</h1>
+        <h2>Paso #1 - Creación repositorio</h2>
+        <hr>
+        <h2>{{ segundopaso }}</h2>
+            <p>Nombre: {{ nombre }}</p>
+            <p>Edad: {{ edad }}</p>
+            <p>Ciudad: {{ ciudad }}</p>
+            <p>Hola, mi nombre es {{ nombre }}, tengo {{ edad }} años y vivo en {{ ciudad }}.</p>
+        <hr>
+        <h2>{{ tercerpaso }}</h2>
+            <p>Contador: {{ contador }}</p>
+            <button v-on:click="contador++">Incrementar</button>
+            <button @click="contador--">Decrementar</button>
+        <hr>
+        <h2>{{</h2>
+
+
+    </div>
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    segundopaso: 'Paso #2 - Información de Perfil Simple (Interpolación)',
+                    nombre: 'Ana García',
+                    edad: 30,
+                    ciudad: 'Tupungato',
+                    tercerpaso: 'Paso #3 - Contador Interactivo (Interpolación y Eventos)',
+                    contador: 0,
+                    cuartopaso: 'Lista de Tareas con Conteo y Estado Propiedades Computadas, Interpolación, Eventos)',
+
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

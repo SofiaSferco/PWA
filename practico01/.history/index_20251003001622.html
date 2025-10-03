@@ -27,8 +27,6 @@
         </ul>
         <input v-model="nuevaTarea" placeholder="Introducir nueva tarea">
         <button @click="agregarTarea">Añadir tarea</button>
-        <p>Tareas pendientes: {{tareasPendientes}}</p>
-        <p>Tareas totales: {{tareasTotales}}</p>
 
 
 
@@ -55,7 +53,8 @@
                }
             }, methods: {
                 agregarTarea() {
-                    if (this.nuevaTarea != "") { //asi como está admite espacios y permito agregar tareas vacias si uso this.nuevaTarea.trim() ahi limito eso
+                    if (this.nuevaTarea != "") { 
+                    
                         this.tareas.push({
                             id: this.tareas.length +1,
                             texto: this.nuevaTarea,
@@ -64,13 +63,6 @@
                         }
                     this.nuevaTarea = '';    
                     }    
-                }, computed: {
-                    tareasPendientes() {
-                        return this.tareas.filter (tarea => !tarea.completada).length;
-                    },
-                     tareasTotales() {
-                        return this.tareas.length;
-                    }
                 }
             },
         ).mount('#app');

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PARCIAL 2
+    </title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>TRABAJO PRÁCTICO N°1</h1>
+        <br>
+        <h2>Paso #1 - Creación repositorio</h2>
+        <hr>
+        <h2>{{ segundopaso }}</h2>
+            <p>Nombre: {{ nombre }}</p>
+            <p>Edad: {{ edad }}</p>
+            <p>Ciudad: {{ ciudad }}</p>
+            <p>Hola, mi nombre es {{ nombre }}, tengo {{ edad }} años y vivo en {{ ciudad }}.</p>
+        <hr>
+        <h2>{{ tercerpaso }}</h2>
+            <p>Contador: {{ contador }}</p>
+            <button v-on:click="contador++">Incrementar</button>
+            <button @click="contador--">Decrementar</button>
+        <hr>
+        <h2>{{cuartopaso}}</h2>
+        <ul>
+            <li v-for="tarea in tareas" :key="tarea.id" :class="{tachar: tarea.completada}"><input type="checkbox" v-model="tarea.completada"> {{tarea.texto}}</li>
+        </ul>
+        <input v-model="nuevaTarea" placeholder="Introducir nueva tarea" @keyup.enter="agregarTarea">
+        <button @click="agregarTarea">Añadir tarea</button>
+        <p>Tareas pendientes: {{tareasPendientes}}</p>
+        <p>Tareas totales: {{tareasTotales}}</p>
+
+        <h1>TRABAJO PRÁCTICO N°2</h1>
+        <br>
+        <h2>Paso #1 - Lista de eventos</h2>
+        <hr>
+        <div v-if="mostrarComponente">
+        <ul>
+            <li v-for="evento in listaeventos" :key="evento.id">ID {{ evento.id }} - {{ evento.nombre }} - {{ evento.timestamp }}</li>
+        </ul>
+        </div>
+        <p>Eventos registrados (Total: {{ totalEventos }})<p>
+        <button @click="forzarActualizacion">Forzar actualización</button>
+        <button @click="destruirComponente">Desmontar</button>
+        <button @click="crearComponente">Montar</button>
+
+</div>   
+    
+    <script>
+        const eventosTemporales = [];
+        const ahora = new Date();
+        const timestamp = ahora.toLocaleString('es-AR', {
+            hour12: false,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        }) + '.' + ahora.getMilliseconds();
+
+        eventosTemporales.push({
+            id: 1,
+            nombre: 'beforeCreate',
+            timestamp: timestamp
+        });
+
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    segundopaso: 'Paso #2 - Información de Perfil Simple (Interpolación)',
+                    nombre: 'Ana García',
+                    edad: 30,
+                    ciudad: 'Tupungato',
+                    tercerpaso: 'Paso #3 - Contador Interactivo (Interpolación y Eventos)',
+                    contador: 0,
+                    cuartopaso: 'Paso #4 - Lista de Tareas con Conteo y Estado Propiedades Computadas, Interpolación, Eventos)',
+                    nuevaTarea: '',
+                    tareas: [{
+                        id: 1,
+                        texto: "Aprender Vue",
+                        completada: false
+                    }
+                    ],
+                    listaeventos: [...eventosTemporales],
+                    contadorId: eventosTemporales.length + 1,
+                    mostrarComponente: true
+                }
+            }, 
+            methods: {
+                agregarTarea() {
+                    if (this.nuevaTarea != "") { //asi como está admite espacios y permito agregar tareas vacias si uso this.nuevaTarea.trim() ahi limito eso
+                        this.tareas.push({
+                            id: this.tareas.length +1,
+                            texto: this.nuevaTarea,
+                            completada: false
+                        })
+                    }
+                    this.nuevaTarea = '';    
+                },
+                registrarEvento(nombre) {
+                    const ahora = new Date();
+                    const timestamp = ahora.toLocaleString('es-AR', {
+                    hour12: false,
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                    }) + '.' + ahora.getMilliseconds();
+                    this.listaeventos.push({
+                        id: this.contadorId++,
+                        nombre,
+                        timestamp
+                    });
+                },    
+                forzarActualizacion() {
+                    this.registrarEvento('beforeUpdate');
+                    this.registrarEvento('updated');
+                },
+                destruirComponente() {
+                    this.mostrarComponente = false; 
+                },
+                crearComponente() {
+                    this.mostrarComponente = true;  
+                }
+            
+            }, 
+            computed: {
+                tareasPendientes() {
+                    return this.tareas.filter (tarea => !tarea.completada).length;
+                },
+                tareasTotales() {
+                    return this.tareas.length;
+                },
+                totalEventos() {
+                    return this.listaeventos.length;
+                }
+            
+            },
+            created() { this.registrarEvento('created'); },
+            beforeMount() { this.registrarEvento('beforeMount'); },
+            mounted() { this.registrarEvento('mounted'); },
+            //beforeUpdate() { this.registrarEvento('beforeUpdate'); },
+            //updated() { this.registrarEvento('updated'); },
+            beforeUnmount() { this.registrarEvento('beforeUnmount'); },
+            unmounted() { this.registrarEvento('unmounted'); }
+        }).mount('#app');
+    </script>
+</body>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #ffff;
+        background-color: #001f3f;
+    }
+    h1{
+        text-align: center;
+        color: #ffff;
+    }
+    h2 {
+        color:#ffff;
+    }
+    hr {
+        border: 1px solid #ffffff33;
+        }
+    button {
+        background-color: #ffff;
+        color: black;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    button:hover {
+        background-color: rgb(177, 177, 240);
+    }
+    ul {
+        list-style-type: none;
+        padding-left: 0px;
+    }
+    .tachar{
+        text-decoration: line-through;
+        color: gray
+    }
+    input[type="checkbox"] {
+        cursor: pointer;
+    }
+</style>
+</html>

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PARCIAL 2
-    </title>
+    <title>Trabajo Práctico 1</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div id="app">
@@ -35,7 +35,6 @@
         <h1>TRABAJO PRÁCTICO N°2</h1>
         <br>
         <h2>Paso #1 - Lista de eventos</h2>
-        <hr>
         <div v-if="mostrarComponente">
         <ul>
             <li v-for="evento in listaeventos" :key="evento.id">ID {{ evento.id }} - {{ evento.nombre }} - {{ evento.timestamp }}</li>
@@ -45,6 +44,25 @@
         <button @click="forzarActualizacion">Forzar actualización</button>
         <button @click="destruirComponente">Desmontar</button>
         <button @click="crearComponente">Montar</button>
+        <hr>
+        <h2>Paso #2 - Implementación de Axios</h2>
+        <input v-model="postId" type="number" placeholder="Ingresá un postId">
+        <button @click="cargarPost">Obtener Post</button>
+        <button @click="cargarComentarios">Obtener Comentarios</button>
+        <p v-if="error" style="color: red;">{{ error }}</p>
+        <div v-if="post">
+        <h2>Post #{{ post.id }}</h2>
+        <p><strong>Título:</strong> {{ post.title }}</p>
+        <p><strong>Contenido:</strong> {{ post.body }}</p>
+        </div>
+        <div v-if="comentarios.length">
+        <h2>Comentarios</h2>
+        <ul>
+            <li v-for="comentario in comentarios" :key="comentario.id">
+            <strong>{{ comentario.email }}</strong>: {{ comentario.body }}
+            </li>
+        </ul>
+        </div>
 
 </div>   
     
@@ -87,7 +105,12 @@
                     ],
                     listaeventos: [...eventosTemporales],
                     contadorId: eventosTemporales.length + 1,
-                    mostrarComponente: true
+                    mostrarComponente: true,
+                    postId: 1,
+                    post: null,
+                    comentarios: [],
+                    error: ''
+
                 }
             }, 
             methods: {
@@ -127,8 +150,41 @@
                 },
                 crearComponente() {
                     this.mostrarComponente = true;  
+                },
+                async obtenerPost(id) {
+                    try {
+                        const respuesta = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`);
+                        return respuesta.data;
+                    } catch (error) {
+                        console.error('Error al obtener el post:', error);
+                        return null;
+                    }
+                },
+                async obtenerComments(id) {
+                try {
+                    const respuesta = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
+                    return respuesta.data;
+                } catch (error) {
+                    console.error('Error al obtener los comentarios:', error);
+                    return [];
                 }
-            
+                },
+                async cargarPost() {
+                this.error = ''; 
+                this.post = await this.obtenerPost(this.postId);
+                if (!this.post || Object.keys(this.post).length === 0) {
+                    this.error = `No se encontró el post con ID ${this.postId}`;
+                    this.post = null;
+                }
+                },
+                async cargarComentarios() {
+                this.error = ''; 
+                this.comentarios = await this.obtenerComments(this.postId);
+                if (!this.comentarios.length) {
+                    this.error = `No se encontraron comentarios para el post con ID ${this.postId}`;
+                }
+
+                }
             }, 
             computed: {
                 tareasPendientes() {

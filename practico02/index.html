@@ -63,6 +63,21 @@
             </li>
         </ul>
         </div>
+        <hr>
+        <h2>Paso #3 - Uso de las funciones</h2>
+        <ul>
+        <li v-for="post in posts" :key="post.id" @click="cargarComentariosPost(post.id)" style="cursor:pointer">
+            <strong>{{ post.id }} - {{ post.title }}</strong>
+        </li>
+        </ul>
+        <div v-if="comentariosSeleccionados.length">
+        <h3>Comentarios del Post</h3>
+        <ul>
+            <li v-for="comentario in comentariosSeleccionados" :key="comentario.id">
+            <strong>{{ comentario.email }}</strong>: {{ comentario.body }}
+            </li>
+        </ul>
+        </div>
 
 </div>   
     
@@ -109,8 +124,9 @@
                     postId: 1,
                     post: null,
                     comentarios: [],
-                    error: ''
-
+                    error: '',
+                    posts: [], 
+                    comentariosSeleccionados: []
                 }
             }, 
             methods: {
@@ -184,8 +200,21 @@
                     this.error = `No se encontraron comentarios para el post con ID ${this.postId}`;
                 }
 
-                }
+                },
+                async cargarComentariosPost(id) {
+                this.comentariosSeleccionados = await this.obtenerComments(id);
+                }   
+
             }, 
+            async mounted() {
+                this.registrarEvento('mounted');
+                for (let i = 1; i <= 10; i++) {
+                const post = await this.obtenerPost(i);
+                if (post) {
+                    this.posts.push(post);
+                }
+                }
+            },
             computed: {
                 tareasPendientes() {
                     return this.tareas.filter (tarea => !tarea.completada).length;
@@ -200,7 +229,7 @@
             },
             created() { this.registrarEvento('created'); },
             beforeMount() { this.registrarEvento('beforeMount'); },
-            mounted() { this.registrarEvento('mounted'); },
+            //mounted() { this.registrarEvento('mounted'); },
             //beforeUpdate() { this.registrarEvento('beforeUpdate'); },
             //updated() { this.registrarEvento('updated'); },
             beforeUnmount() { this.registrarEvento('beforeUnmount'); },
